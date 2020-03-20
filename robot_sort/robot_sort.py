@@ -96,8 +96,41 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # initialize light to ON
+        self.set_light_on()
+
+        # while the robot can move right...
+        while self.can_move_right():
+
+            #if the item the robot is holding is NOT greater than the item he's on... 
+            if self.compare_item() != 1:
+                # ...swap them
+                self.swap_item()
+
+            # move right after checking condition
+            self.move_right()
+
+            # once the robot has reached the end of the list...
+            if self.can_move_right() == False:
+                # while the item the robot is holding has a smaller value than what he's on...
+                while self.compare_item() == -1:
+                    #...continually move left 
+                    self.move_left()
+
+                # when he's at the very end of the list he'll be holding the largest number, 99, so he swaps to put 99 in the last index
+                self.swap_item()
+
+                #SO... as the robot iterates through the list, he's continually increasing the index of None, so when hes at the end of the list and it returns 'None'...
+                if self.compare_item() == None:
+                    # ...he turns his light off as this indicates the the list has been sorted
+                    self.set_light_off()
+                # if his light get's turned off, the loop breaks
+                if self.light_is_on() == False:
+                    break
+                # this tells him to move all the way to the start while he can
+                while self.can_move_left():
+                    self.move_left()
+
 
 
 if __name__ == "__main__":
